@@ -1,0 +1,16 @@
+{
+  "name": "recombee-mock",
+  "version": "1.0.0",
+  "description": "Mock Recombee API service for local development",
+  "main": "src/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
