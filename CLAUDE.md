@@ -95,7 +95,7 @@ export function createXxxRoutes(store) {
 
 ## Integration with apify-dev-stack
 
-The dev-stack Dockerfile at `apify-dev-stack/src/recombee-mock/Dockerfile` clones this repo from GitHub during build (same pattern as algolite). To test local changes before pushing:
+The dev-stack Dockerfile at `apify-dev-stack/src/recombee-mock/Dockerfile` clones this repo from GitHub during build (same pattern as algolite). Use `RECOMBEE_LOCAL_GIT_REF` build arg to pin a specific commit. To test local changes before pushing:
 
 ```bash
 # In recombee-local directory
