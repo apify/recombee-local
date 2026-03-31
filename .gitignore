@@ -11,3 +11,9 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude / AI
+.claude/
+.cursor/
+.aider*
+.copilot/
