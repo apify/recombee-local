@@ -18,6 +18,14 @@ export function createItemRoutes(store) {
         res.json({ ok: true });
     });
 
+    // GET /{dbId}/items/list/ - ListItems
+    router.get('/items/list/', (req, res) => {
+        const { dbId } = req.params;
+        const items = store.getAllItems(dbId);
+        const itemList = Object.keys(items).map((itemId) => ({ itemId }));
+        res.json({ items: itemList });
+    });
+
     // GET /{dbId}/items/{itemId} - GetItemValues
     router.get('/items/:itemId', (req, res) => {
         const { dbId, itemId } = req.params;
