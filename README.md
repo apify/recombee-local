@@ -41,6 +41,7 @@ npm start -- --port 9300 --data ./data
 - `PUT /{dbId}/users/{userId}` - Add a user
 - `POST /{dbId}/users/{userId}` - Set user values
 - `DELETE /{dbId}/users/{userId}` - Delete a user
+- `GET /{dbId}/users/list/` - List all users
 
 ### Interactions
 

@@ -55,6 +55,31 @@ function executeRequest(store, dbId, request) {
         }
     }
 
+    // List Users
+    if (pathParts[0] === 'users' && pathParts[1] === 'list' && method === 'GET') {
+        const count = parseInt(params.count, 10) || 100;
+        const offset = parseInt(params.offset, 10) || 0;
+        const returnProperties = params.returnProperties === true || params.returnProperties === 'true';
+        const includedProperties = params.includedProperties
+            ? (Array.isArray(params.includedProperties) ? params.includedProperties : [params.includedProperties])
+            : null;
+
+        const allUsers = store.getAllUsers(dbId);
+        const userEntries = Object.entries(allUsers).slice(offset, offset + count);
+
+        const users = userEntries.map(([userId, values]) => {
+            if (!returnProperties) {
+                return { userId };
+            }
+            const filteredValues = includedProperties
+                ? Object.fromEntries(includedProperties.filter(p => p in values).map(p => [p, values[p]]))
+                : values;
+            return { userId, values: filteredValues };
+        });
+
+        return { users };
+    }
+
     // Users
     if (pathParts[0] === 'users' && pathParts[1]) {
         const userId = pathParts[1];
