@@ -53,6 +53,7 @@ npm start -- --port 9300 --data ./data
 
 - `POST /{dbId}/recomms/items/{itemId}/` - Recommend items similar to an item
 - `POST /{dbId}/recomms/users/{userId}/` - Recommend items to a user
+- `POST /{dbId}/recomms/next/items/{recommendationId}/` - Get next page of recommendations
 
 ### Search
 
