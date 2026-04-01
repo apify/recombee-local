@@ -35,7 +35,8 @@ function executeRequest(store, dbId, request) {
 
     // Items - ListItems
     if (pathParts[0] === 'items' && pathParts[1] === 'list' && method === 'GET') {
-        // filter is ignored (no ReQL evaluation in mock)
+        // filter is ignored — it's a ReQL expression (Recombee's custom query language)
+        // and implementing a ReQL parser/evaluator is out of scope for this mock
         const limitCount = params.count !== undefined ? parseInt(params.count, 10) : null;
         const skipOffset = params.offset !== undefined ? parseInt(params.offset, 10) : 0;
         const withProperties = params.returnProperties === true || params.returnProperties === 'true';

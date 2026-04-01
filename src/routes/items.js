@@ -23,7 +23,8 @@ export function createItemRoutes(store) {
         const { dbId } = req.params;
         const { filter, count, offset, returnProperties, includedProperties } = req.query;
 
-        // filter is ignored (no ReQL evaluation in mock)
+        // filter is ignored — it's a ReQL expression (Recombee's custom query language)
+        // and implementing a ReQL parser/evaluator is out of scope for this mock
         const limitCount = count !== undefined ? parseInt(count, 10) : null;
         const skipOffset = offset !== undefined ? parseInt(offset, 10) : 0;
         const withProperties = returnProperties === 'true';
