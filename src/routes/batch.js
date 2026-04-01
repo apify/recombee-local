@@ -33,6 +33,13 @@ function executeRequest(store, dbId, request) {
     // Parse path to extract resource type and id
     const pathParts = path.split('/').filter(Boolean);
 
+    // Items - ListItems
+    if (pathParts[0] === 'items' && pathParts[1] === 'list' && method === 'GET') {
+        const items = store.getAllItems(dbId);
+        const itemList = Object.keys(items).map((itemId) => ({ itemId }));
+        return { items: itemList };
+    }
+
     // Items
     if (pathParts[0] === 'items' && pathParts[1]) {
         const itemId = pathParts[1];

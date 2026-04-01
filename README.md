@@ -35,6 +35,7 @@ npm start -- --port 9300 --data ./data
 - `POST /{dbId}/items/{itemId}` - Set item values
 - `GET /{dbId}/items/{itemId}` - Get item values
 - `DELETE /{dbId}/items/{itemId}` - Delete an item
+- `GET /{dbId}/items/list/` - List all items
 
 ### Users
 
