@@ -96,6 +96,11 @@ export class JsonStore {
         return existed;
     }
 
+    getAllUsers(dbId) {
+        const db = this.loadDb(dbId);
+        return db.users;
+    }
+
     // Interaction operations
     addInteraction(dbId, type, data) {
         const db = this.loadDb(dbId);
