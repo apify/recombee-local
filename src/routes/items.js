@@ -21,9 +21,34 @@ export function createItemRoutes(store) {
     // GET /{dbId}/items/list/ - ListItems
     router.get('/items/list/', (req, res) => {
         const { dbId } = req.params;
-        const items = store.getAllItems(dbId);
-        const itemList = Object.keys(items).map((itemId) => ({ itemId }));
-        res.json({ items: itemList });
+        const { filter, count, offset, returnProperties, includedProperties } = req.query;
+
+        // filter is ignored — it's a ReQL expression (Recombee's custom query language)
+        // and implementing a ReQL parser/evaluator is out of scope for this mock
+        const limitCount = count !== undefined ? parseInt(count, 10) : null;
+        const skipOffset = offset !== undefined ? parseInt(offset, 10) : 0;
+        const withProperties = returnProperties === 'true';
+        const propertyList = includedProperties
+            ? includedProperties.split(',').map((p) => p.trim()).filter(Boolean)
+            : null;
+
+        const allItems = store.getAllItems(dbId);
+        let entries = Object.entries(allItems).slice(skipOffset);
+        if (limitCount !== null) {
+            entries = entries.slice(0, limitCount);
+        }
+
+        const result = entries.map(([itemId, values]) => {
+            if (!withProperties) {
+                return itemId;
+            }
+            const filteredValues = propertyList
+                ? Object.fromEntries(propertyList.filter((p) => p in values).map((p) => [p, values[p]]))
+                : values;
+            return { itemId, ...filteredValues };
+        });
+
+        res.json(result);
     });
 
     // GET /{dbId}/items/{itemId} - GetItemValues
