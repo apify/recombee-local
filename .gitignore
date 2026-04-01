@@ -1,0 +1,19 @@
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude / AI
+.claude/
+.cursor/
+.aider*
+.copilot/
