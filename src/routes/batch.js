@@ -35,9 +35,31 @@ function executeRequest(store, dbId, request) {
 
     // Items - ListItems
     if (pathParts[0] === 'items' && pathParts[1] === 'list' && method === 'GET') {
-        const items = store.getAllItems(dbId);
-        const itemList = Object.keys(items).map((itemId) => ({ itemId }));
-        return { items: itemList };
+        // filter is ignored (no ReQL evaluation in mock)
+        const limitCount = params.count !== undefined ? parseInt(params.count, 10) : null;
+        const skipOffset = params.offset !== undefined ? parseInt(params.offset, 10) : 0;
+        const withProperties = params.returnProperties === true || params.returnProperties === 'true';
+        const propertyList = params.includedProperties
+            ? (Array.isArray(params.includedProperties)
+                ? params.includedProperties
+                : params.includedProperties.split(',').map((p) => p.trim()).filter(Boolean))
+            : null;
+
+        const allItems = store.getAllItems(dbId);
+        let entries = Object.entries(allItems).slice(skipOffset);
+        if (limitCount !== null) {
+            entries = entries.slice(0, limitCount);
+        }
+
+        return entries.map(([itemId, values]) => {
+            if (!withProperties) {
+                return itemId;
+            }
+            const filteredValues = propertyList
+                ? Object.fromEntries(propertyList.filter((p) => p in values).map((p) => [p, values[p]]))
+                : values;
+            return { itemId, ...filteredValues };
+        });
     }
 
     // Items
