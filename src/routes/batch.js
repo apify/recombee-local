@@ -186,15 +186,11 @@ function executeRequest(store, dbId, request) {
     }
 
     // Search
-    if (pathParts[0] === 'search' && method === 'POST') {
+    if (pathParts[0] === 'search' && (method === 'POST' || method === 'GET')) {
         const items = store.getAllItems(dbId);
         const count = params.count || 10;
         const query = params.searchQuery || '';
 
-        // /search/items/
-        if (pathParts[1] === 'items') {
-            return searchItems(items, query, count);
-        }
         // /search/users/{userId}/items/
         if (pathParts[1] === 'users' && pathParts[3] === 'items') {
             return searchItems(items, query, count);
