@@ -36,6 +36,16 @@ export function createUserRoutes(store) {
         res.json({ ok: true });
     });
 
+    // GET /{dbId}/users/{userId} - GetUserValues
+    router.get('/users/:userId', (req, res) => {
+        const { dbId, userId } = req.params;
+        const user = store.getUser(dbId, userId);
+        if (user === null) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json(user);
+    });
+
     // POST /{dbId}/users/{userId} - SetUserValues
     router.post('/users/:userId', (req, res) => {
         const { dbId, userId } = req.params;
