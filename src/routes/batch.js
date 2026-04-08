@@ -175,6 +175,9 @@ function executeRequest(store, dbId, request) {
         if (pathParts[1] === 'users' && pathParts[2]) {
             return getRandomRecommendations(items, count);
         }
+        if (pathParts[1] === 'next' && pathParts[2] === 'items' && pathParts[3]) {
+            return getRandomRecommendations(items, count);
+        }
     }
 
     // Search

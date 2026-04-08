@@ -26,5 +26,16 @@ export function createRecommendationRoutes(store) {
         res.json(recommendations);
     });
 
+    // POST /{dbId}/recomms/next/items/{recommendationId}/ - RecommendNextItems
+    router.post('/recomms/next/items/:recommendationId/', (req, res) => {
+        const { dbId } = req.params;
+        const { count = 10 } = req.body;
+
+        const items = store.getAllItems(dbId);
+        const recommendations = getRandomRecommendations(items, count);
+
+        res.json(recommendations);
+    });
+
     return router;
 }
