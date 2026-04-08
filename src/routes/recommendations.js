@@ -4,8 +4,8 @@ import { getRandomRecommendations } from '../utils/random-recommender.js';
 export function createRecommendationRoutes(store) {
     const router = Router({ mergeParams: true });
 
-    // POST /{dbId}/recomms/items/{itemId}/ - RecommendItemsToItem
-    router.post('/recomms/items/:itemId/', (req, res) => {
+    // POST /{dbId}/recomms/items/{itemId}/items/ - RecommendItemsToItem
+    router.post('/recomms/items/:itemId/items/', (req, res) => {
         const { dbId, itemId } = req.params;
         const { count = 10 } = req.body;
 
@@ -15,8 +15,8 @@ export function createRecommendationRoutes(store) {
         res.json(recommendations);
     });
 
-    // POST /{dbId}/recomms/users/{userId}/ - RecommendItemsToUser
-    router.post('/recomms/users/:userId/', (req, res) => {
+    // POST /{dbId}/recomms/users/{userId}/items/ - RecommendItemsToUser
+    router.post('/recomms/users/:userId/items/', (req, res) => {
         const { dbId } = req.params;
         const { count = 10 } = req.body;
 

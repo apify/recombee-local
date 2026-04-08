@@ -169,10 +169,10 @@ function executeRequest(store, dbId, request) {
         const items = store.getAllItems(dbId);
         const count = params.count || 10;
 
-        if (pathParts[1] === 'items' && pathParts[2]) {
+        if (pathParts[1] === 'items' && pathParts[2] && pathParts[3] === 'items') {
             return getRandomRecommendations(items, count, pathParts[2]);
         }
-        if (pathParts[1] === 'users' && pathParts[2]) {
+        if (pathParts[1] === 'users' && pathParts[2] && pathParts[3] === 'items') {
             return getRandomRecommendations(items, count);
         }
         if (pathParts[1] === 'next' && pathParts[2] === 'items' && pathParts[3]) {
