@@ -121,6 +121,11 @@ function executeRequest(store, dbId, request) {
             store.setUser(dbId, userId, params);
             return { ok: true };
         }
+        if (method === 'GET') {
+            const user = store.getUser(dbId, userId);
+            if (user === null) throw new Error('User not found');
+            return user;
+        }
         if (method === 'DELETE') {
             store.deleteUser(dbId, userId);
             return { ok: true };
