@@ -191,7 +191,7 @@ function executeRequest(store, dbId, request) {
         const count = params.count || 10;
         const query = params.searchQuery || '';
 
-        // /search/users/{userId}/items/
+        // SearchItems - /search/users/{userId}/items/
         if (pathParts[1] === 'users' && pathParts[3] === 'items') {
             return searchItems(items, query, count);
         }
