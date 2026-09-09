@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRandomRecommendations } from '../utils/random-recommender.js';
+import { getRandomRecommendations, getRandomItemSegments, getItemsForSegment } from '../utils/random-recommender.js';
 
 export function createRecommendationRoutes(store) {
     const router = Router({ mergeParams: true });
@@ -22,6 +22,28 @@ export function createRecommendationRoutes(store) {
 
         const items = store.getAllItems(dbId);
         const recommendations = getRandomRecommendations(items, count);
+
+        res.json(recommendations);
+    });
+
+    // POST /{dbId}/recomms/users/{userId}/item-segments/ - RecommendItemSegmentsToUser
+    router.post('/recomms/users/:userId/item-segments/', (req, res) => {
+        const { dbId } = req.params;
+        const { count = 10 } = req.body;
+
+        const items = store.getAllItems(dbId);
+        const recommendations = getRandomItemSegments(items, count);
+
+        res.json(recommendations);
+    });
+
+    // POST /{dbId}/recomms/item-segments/items/ - RecommendItemsToItemSegment
+    router.post('/recomms/item-segments/items/', (req, res) => {
+        const { dbId } = req.params;
+        const { contextSegmentId, count = 10 } = req.body;
+
+        const items = store.getAllItems(dbId);
+        const recommendations = getItemsForSegment(items, contextSegmentId, count);
 
         res.json(recommendations);
     });

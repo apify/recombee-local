@@ -58,6 +58,8 @@ src/
 | `/{dbId}/bookmarks/` | POST | AddBookmark |
 | `/{dbId}/recomms/items/{itemId}/` | POST | RecommendItemsToItem |
 | `/{dbId}/recomms/users/{userId}/` | POST | RecommendItemsToUser |
+| `/{dbId}/recomms/users/{userId}/item-segments/` | POST | RecommendItemSegmentsToUser |
+| `/{dbId}/recomms/item-segments/items/` | POST | RecommendItemsToItemSegment |
 | `/{dbId}/search/items/` | POST | SearchItems |
 | `/{dbId}/search/users/{userId}/items/` | POST | SearchItemsForUser |
 | `/{dbId}/batch/` | POST | Batch |
@@ -108,7 +110,7 @@ node src/index.js --port 9300 --data ./data
 - List items/users (`/{dbId}/items/list/`, `/{dbId}/users/list/`)
 - Cart additions (`/{dbId}/cartadditions/`)
 - Set view portions (`/{dbId}/viewportions/`)
-- Segments (`/{dbId}/items/{itemId}/segments/`)
+- Server-side Segmentations (configured via Recombee's Admin UI) — segment endpoints derive segments directly from items' `categories` property instead
 - Series and series items
 - Synonyms for search
 - Filter and booster expressions (currently ignored)

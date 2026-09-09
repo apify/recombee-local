@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRandomRecommendations } from '../utils/random-recommender.js';
+import { getRandomRecommendations, getRandomItemSegments, getItemsForSegment } from '../utils/random-recommender.js';
 import { searchItems } from '../utils/search.js';
 
 export function createBatchRoutes(store) {
@@ -179,6 +179,12 @@ function executeRequest(store, dbId, request) {
         }
         if (pathParts[1] === 'users' && pathParts[2] && pathParts[3] === 'items') {
             return getRandomRecommendations(items, count);
+        }
+        if (pathParts[1] === 'users' && pathParts[2] && pathParts[3] === 'item-segments') {
+            return getRandomItemSegments(items, count);
+        }
+        if (pathParts[1] === 'item-segments' && pathParts[2] === 'items') {
+            return getItemsForSegment(items, params.contextSegmentId, count);
         }
         if (pathParts[1] === 'next' && pathParts[2] === 'items' && pathParts[3]) {
             return getRandomRecommendations(items, count);
