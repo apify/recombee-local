@@ -55,6 +55,8 @@ npm start -- --port 9300 --data ./data
 
 - `POST /{dbId}/recomms/items/{itemId}/` - Recommend items similar to an item
 - `POST /{dbId}/recomms/users/{userId}/` - Recommend items to a user
+- `POST /{dbId}/recomms/users/{userId}/item-segments/` - Recommend item segments to a user (segments are derived from items' `categories` property)
+- `POST /{dbId}/recomms/item-segments/items/` - Recommend items belonging to an item segment (`contextSegmentId` matched against items' `categories`, falls back to random items if none match)
 - `POST /{dbId}/recomms/next/items/{recommendationId}/` - Get next page of recommendations
 
 ### Search
