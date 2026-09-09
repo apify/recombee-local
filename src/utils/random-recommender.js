@@ -14,13 +14,29 @@ export function getRandomRecommendations(items, count, excludeItemId = null) {
     };
 }
 
+// Matches production: the Segmentation is configured on the use-case taxonomy (depth 1 and 2),
+// synced onto items as useCase1Categories/useCase2Categories. Falls back to the legacy `categories`
+// field only if a store has no use-case taxonomy data at all (e.g. an older local dataset).
+const USE_CASE_CATEGORY_PROPERTIES = ['useCase1Categories', 'useCase2Categories'];
+const LEGACY_CATEGORY_PROPERTY = 'categories';
+
+function getCategoryProperties(items) {
+    const hasUseCaseCategories = Object.values(items).some((values) =>
+        USE_CASE_CATEGORY_PROPERTIES.some((property) => Array.isArray(values[property]) && values[property].length > 0),
+    );
+    return hasUseCaseCategories ? USE_CASE_CATEGORY_PROPERTIES : [LEGACY_CATEGORY_PROPERTY];
+}
+
+function getItemCategoryValues(values, properties) {
+    return properties.flatMap((property) => (Array.isArray(values[property]) ? values[property] : []));
+}
+
 export function getUniqueCategories(items) {
+    const properties = getCategoryProperties(items);
     const categories = new Set();
     for (const values of Object.values(items)) {
-        if (Array.isArray(values.categories)) {
-            for (const category of values.categories) {
-                categories.add(category);
-            }
+        for (const category of getItemCategoryValues(values, properties)) {
+            categories.add(category);
         }
     }
     return [...categories];
@@ -37,7 +53,8 @@ export function getRandomItemSegments(items, count) {
 }
 
 export function getItemsForSegment(items, segmentId, count) {
-    const matchingIds = Object.keys(items).filter(id => Array.isArray(items[id].categories) && items[id].categories.includes(segmentId));
+    const properties = getCategoryProperties(items);
+    const matchingIds = Object.keys(items).filter(id => getItemCategoryValues(items[id], properties).includes(segmentId));
     const pool = matchingIds.length > 0 ? matchingIds : Object.keys(items);
     const poolItems = Object.fromEntries(pool.map(id => [id, items[id]]));
 
