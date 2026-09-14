@@ -203,5 +203,10 @@ function executeRequest(store, dbId, request) {
         }
     }
 
+    // Scenarios - ListScenarios
+    if (pathParts[0] === 'scenarios' && method === 'GET') {
+        return store.getScenarios(dbId);
+    }
+
     throw new Error(`Unknown operation: ${method} ${path}`);
 }

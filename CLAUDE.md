@@ -19,6 +19,7 @@ src/
 │   ├── interactions.js   # POST /{dbId}/detailviews|purchases|ratings|bookmarks/
 │   ├── recommendations.js # POST /{dbId}/recomms/items|users/{id}/
 │   ├── search.js         # POST /{dbId}/search/items/ and /search/users/{id}/items/
+│   ├── scenarios.js      # GET /{dbId}/scenarios/
 │   └── batch.js          # POST /{dbId}/batch/ - executes multiple operations
 ├── storage/
 │   └── json-store.js     # JSON file-based persistence (one file per dbId)
@@ -62,6 +63,7 @@ src/
 | `/{dbId}/recomms/item-segments/items/` | POST | RecommendItemsToItemSegment |
 | `/{dbId}/search/items/` | POST | SearchItems |
 | `/{dbId}/search/users/{userId}/items/` | POST | SearchItemsForUser |
+| `/{dbId}/scenarios/` | GET | ListScenarios |
 | `/{dbId}/batch/` | POST | Batch |
 
 ## Adding New Endpoints
@@ -114,5 +116,6 @@ node src/index.js --port 9300 --data ./data
 - Series and series items
 - Synonyms for search
 - Filter and booster expressions (currently ignored)
+- Scenarios are also configured in Recombee's Admin UI, so `ListScenarios` returns an empty list by default — seed `db.scenarios` (`[{ id, endpoint }, ...]`) in the data file for a dbId to test A/B scenario resolution locally
 
 Check https://docs.recombee.com/api for full endpoint reference when extending.
