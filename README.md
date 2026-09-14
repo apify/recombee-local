@@ -72,6 +72,10 @@ Search request body:
 }
 ```
 
+### Scenarios
+
+- `GET /{dbId}/scenarios/` - List scenarios (empty by default; scenarios are configured in Recombee's Admin UI, so seed `scenarios` in the data file to test A/B resolution locally)
+
 ### Batch Operations
 
 - `POST /{dbId}/batch/` - Execute multiple operations in a single request
@@ -99,7 +103,8 @@ Data is stored in JSON files in the data directory (one file per database). The 
     "purchases": [],
     "ratings": [],
     "bookmarks": []
-  }
+  },
+  "scenarios": []
 }
 ```
 

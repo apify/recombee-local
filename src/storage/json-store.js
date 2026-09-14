@@ -46,6 +46,7 @@ export class JsonStore {
                 ratings: [],
                 bookmarks: [],
             },
+            scenarios: [],
         };
     }
 
@@ -99,6 +100,12 @@ export class JsonStore {
     getAllUsers(dbId) {
         const db = this.loadDb(dbId);
         return db.users;
+    }
+
+    // Scenario operations
+    getScenarios(dbId) {
+        const db = this.loadDb(dbId);
+        return db.scenarios || [];
     }
 
     // Interaction operations

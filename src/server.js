@@ -7,6 +7,7 @@ import { createInteractionRoutes } from './routes/interactions.js';
 import { createRecommendationRoutes } from './routes/recommendations.js';
 import { createBatchRoutes } from './routes/batch.js';
 import { createSearchRoutes } from './routes/search.js';
+import { createScenarioRoutes } from './routes/scenarios.js';
 
 export function createServer({ dataDir }) {
     const app = express();
@@ -30,6 +31,7 @@ export function createServer({ dataDir }) {
     app.use('/:dbId', createInteractionRoutes(store));
     app.use('/:dbId', createRecommendationRoutes(store));
     app.use('/:dbId', createSearchRoutes(store));
+    app.use('/:dbId', createScenarioRoutes(store));
     app.use('/:dbId', createBatchRoutes(store));
 
     // Error handling
